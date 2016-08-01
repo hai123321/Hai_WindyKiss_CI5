@@ -50,9 +50,6 @@ public class GameObject {
     }
 
     public boolean overlap(GameObject gameObject) {
-//        Rectangle rect1 = this.getRect();
-//        Rectangle rect2 = gameObject.getRect();
-//        return rect1.intersects(rect2);
         return overlap(gameObject.getRect());
     }
 

@@ -45,6 +45,7 @@ public class PlaneController extends SingleController implements KeyListener, Co
         super.draw(graphics);
         bulletManager.draw(graphics);
         bulletManager.run();
+
     }
 
     @Override
@@ -80,7 +81,7 @@ public class PlaneController extends SingleController implements KeyListener, Co
             bulletCD = 0;
             if (keyEventSet.contains(KeyEvent.VK_SPACE)) {
                 BulletController bulletController = new BulletController(
-                        new Bullet(this.gameObject.middleX() - Bullet.WIDTH / 2, this.gameObject.getY() - 30),
+                        new Bullet(this.gameObject.middleX() - Bullet.WIDTH / 2, this.gameObject.getY() - 130),
                         new ImageDrawer("resources/bullet.png"),
                         false
                 );
@@ -88,7 +89,7 @@ public class PlaneController extends SingleController implements KeyListener, Co
                 bulletManager.add(bulletController);
 
                 bulletController = new BulletController(
-                        new Bullet(this.gameObject.getX(), this.gameObject.getY()),
+                        new Bullet(this.gameObject.getX(), this.gameObject.getY() - 100),
                         new ImageDrawer("resources/bullet.png"),
                         false
                 );
@@ -96,7 +97,7 @@ public class PlaneController extends SingleController implements KeyListener, Co
                 bulletManager.add(bulletController);
 
                 bulletController = new BulletController(
-                        new Bullet(this.gameObject.getX() + this.gameObject.getHeight(), this.gameObject.getY()),
+                        new Bullet(this.gameObject.getX() + this.gameObject.getHeight(), this.gameObject.getY() - 100),
                         new ImageDrawer("resources/bullet.png"),
                         false
                 );
@@ -124,7 +125,10 @@ public class PlaneController extends SingleController implements KeyListener, Co
     public void onCollide(Colliable colliable) {
         if (colliable instanceof BulletController) {
             colliable.getGameObject().destroy();
-//            this.getGameObject().setHp(this.getGameObject().getHp() - 10);
+
+            if (this.getGameObject().getHp() > 0) {
+                this.getGameObject().setHp(this.getGameObject().getHp() - 10);
+            }
         }
     }
 }

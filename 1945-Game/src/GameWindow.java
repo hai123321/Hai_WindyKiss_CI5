@@ -21,26 +21,16 @@ import java.util.*;
 public class GameWindow extends Frame implements Runnable {
     Image backgroundnd;
     //    Image myPlane;
-    Vector<Bullet> bulletVector1;
-    Vector<Bullet> bulletVector2;
-    Vector<Plane> enemyPlane;
     BufferedImage bufferedImage;
     Graphics bufferdImageGraphics;
 
-    Random in = new Random();
-
-    Set<Integer> keyPress;
-    boolean autoFire = false;
+//    boolean autoFire = false;
 
     PlaneController planeController1;
     Thread thread;
 
     public GameWindow() {
         planeController1 = PlaneController.getPlaneController1();
-        bulletVector1 = new Vector<>();
-        bulletVector2 = new Vector<>();
-        enemyPlane = new Vector<>();
-        keyPress = new HashSet<>();
 
 
         System.out.println("Game window constructor");
@@ -142,7 +132,7 @@ public class GameWindow extends Frame implements Runnable {
         bufferdImageGraphics.drawImage(backgroundnd, 0, 0, null);
         planeController1.draw(bufferdImageGraphics);
         EnemyManager.instance.draw(bufferdImageGraphics);
-
+        bufferdImageGraphics.drawString("Plane HP: " + PlaneController.getPlaneController1().getGameObject().getHp(), 50, 50);
         g.drawImage(bufferedImage, 0, 0, null);
     }
 
@@ -160,7 +150,6 @@ public class GameWindow extends Frame implements Runnable {
 
         }
     }
-
 
 
 }
