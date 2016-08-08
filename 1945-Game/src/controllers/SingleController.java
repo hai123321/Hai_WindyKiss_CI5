@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public class SingleController implements BaseController {
     protected GameObject gameObject;
-    private GameDrawer gameDrawer;
+    protected GameDrawer gameDrawer;
     protected GameVector gameVector;
 
 
@@ -24,6 +24,16 @@ public class SingleController implements BaseController {
     public GameObject getGameObject() {
         return gameObject;
     }
+
+    public GameDrawer getGameDrawer() {
+        return gameDrawer;
+    }
+
+    public void setGameDrawer(GameDrawer a){
+        this.gameDrawer = a;
+    }
+
+
 
     @Override
     public void draw(Graphics graphics) {

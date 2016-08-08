@@ -1,9 +1,6 @@
 //import javax.swing.*;
 
-import controllers.CollsionPool;
-import controllers.EnemyManager;
-import controllers.PlaneController;
-import controllers.SingleController;
+import controllers.*;
 import models.Bullet;
 import models.Direction;
 import models.Plane;
@@ -82,43 +79,7 @@ public class GameWindow extends Frame implements Runnable {
 
         //
         this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB), new Point(0, 0), "blank cursor"));
-//        this.addMouseMotionListener(new MouseMotionListener() {
-//            @Override
-//            public void mouseDragged(MouseEvent e) {
-//                mouseMoved(e);
-//            }
-//
-//            @Override
-//            public void mouseMoved(MouseEvent e) {
-//                plane[0].moveto(e.getX() - 35, e.getY() - 30);
-//            }
-//        });
-//        this.addMouseListener(new MouseListener() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mousePressed(MouseEvent e) {
-//                autoFire = true;
-//            }
-//
-//            @Override
-//            public void mouseReleased(MouseEvent e) {
-//                autoFire = false;
-//            }
-//
-//            @Override
-//            public void mouseEntered(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mouseExited(MouseEvent e) {
-//
-//            }
-//        });
+
 
         this.bufferedImage = new BufferedImage(768, 1024, BufferedImage.TYPE_INT_ARGB);
         this.bufferdImageGraphics = bufferedImage.getGraphics();
@@ -132,6 +93,8 @@ public class GameWindow extends Frame implements Runnable {
         bufferdImageGraphics.drawImage(backgroundnd, 0, 0, null);
         planeController1.draw(bufferdImageGraphics);
         EnemyManager.instance.draw(bufferdImageGraphics);
+        EnemyBulletManager.instance.draw(bufferdImageGraphics);
+        GiftManager.instance.draw(bufferdImageGraphics);
         bufferdImageGraphics.drawString("Plane HP: " + PlaneController.getPlaneController1().getGameObject().getHp(), 50, 50);
         g.drawImage(bufferedImage, 0, 0, null);
     }
@@ -144,6 +107,8 @@ public class GameWindow extends Frame implements Runnable {
                 planeController1.run();
                 EnemyManager.instance.run();
                 CollsionPool.intance.run();
+                GiftManager.instance.run();
+                EnemyBulletManager.instance.run();
                 repaint();
             }
         } catch (InterruptedException e) {

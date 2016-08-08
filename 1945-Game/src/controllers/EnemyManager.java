@@ -12,8 +12,6 @@ public class EnemyManager extends ControllerManager {
 
     private EnemyManager() {
         super();
-
-
     }
 
     Random in = new Random();
@@ -29,18 +27,16 @@ public class EnemyManager extends ControllerManager {
             cd = 0;
             EnemyController enemyController = new EnemyController(
                     new Enemy(enX, enY),
-                    new ImageDrawer("resources/enemy_plane_yellow_3.png"),
-                    true
+                    new ImageDrawer("resources/enemy_plane_yellow_3.png")
             );
             enX = in.nextInt(768);
             this.add(enemyController);
 
-            enemyController = new EnemyController(
-                    new Enemy(10, 200),
-                    new ImageDrawer("resources/plane1.png"),
-                    false
+            BigEnemyController enemyController2 = new BigEnemyController(
+                    new Enemy(10, enX / 2, 70, 70, 5),
+                    new ImageDrawer("resources/plane1.png")
             );
-            this.add(enemyController);
+            this.add(enemyController2);
         }
 
     }

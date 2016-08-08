@@ -19,8 +19,8 @@ public class GameObject {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.hp = hp;
         this.isAlive = true;
+        this.hp = hp;
     }
 
     public boolean isAlive() {
@@ -38,6 +38,10 @@ public class GameObject {
 
     public int middleX() {
         return this.x + this.width / 2;
+    }
+
+    public int middleY() {
+        return this.y + this.height / 2;
     }
 
     public void move(GameVector gameVector) {
@@ -93,7 +97,7 @@ public class GameObject {
         return hp;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
+    public void changeHP(int a) {
+        this.hp += a;
     }
 }

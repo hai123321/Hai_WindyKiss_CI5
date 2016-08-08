@@ -82,24 +82,21 @@ public class PlaneController extends SingleController implements KeyListener, Co
             if (keyEventSet.contains(KeyEvent.VK_SPACE)) {
                 BulletController bulletController = new BulletController(
                         new Bullet(this.gameObject.middleX() - Bullet.WIDTH / 2, this.gameObject.getY() - 130),
-                        new ImageDrawer("resources/bullet.png"),
-                        false
+                        new ImageDrawer("resources/bullet.png")
                 );
 
                 bulletManager.add(bulletController);
 
                 bulletController = new BulletController(
                         new Bullet(this.gameObject.getX(), this.gameObject.getY() - 100),
-                        new ImageDrawer("resources/bullet.png"),
-                        false
+                        new ImageDrawer("resources/bullet.png")
                 );
 
                 bulletManager.add(bulletController);
 
                 bulletController = new BulletController(
                         new Bullet(this.gameObject.getX() + this.gameObject.getHeight(), this.gameObject.getY() - 100),
-                        new ImageDrawer("resources/bullet.png"),
-                        false
+                        new ImageDrawer("resources/bullet.png")
                 );
 
                 bulletManager.add(bulletController);
@@ -123,11 +120,10 @@ public class PlaneController extends SingleController implements KeyListener, Co
 
     @Override
     public void onCollide(Colliable colliable) {
-        if (colliable instanceof BulletController) {
+        if (colliable instanceof BulletEnemyController) {
             colliable.getGameObject().destroy();
-
             if (this.getGameObject().getHp() > 0) {
-                this.getGameObject().setHp(this.getGameObject().getHp() - 10);
+                this.getGameObject().changeHP(-1);
             }
         }
     }

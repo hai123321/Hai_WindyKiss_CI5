@@ -8,7 +8,7 @@ import java.util.Vector;
  * Created by Nam Hai on 7/30/2016.
  */
 public class ControllerManager implements  BaseController{
-    private Vector<SingleController> singleControllerVector;
+    public Vector<SingleController> singleControllerVector;
 
     public ControllerManager() {
         singleControllerVector = new Vector<>();
