@@ -1,12 +1,13 @@
-package controllers.Enemy;
+package controllers.enemies;
 
-import controllers.Bombs.FreezzeSubcriber;
-import controllers.Bombs.NotificationCenter;
-import controllers.Bombs.BombSubscriber;
+import controllers.bombs.FreezzeSubcriber;
+import controllers.bombs.NotificationCenter;
+import controllers.bombs.BombSubscriber;
 import controllers.Colliable;
 import controllers.CollsionPool;
 import controllers.SingleController;
 import models.Enemy;
+import models.GameSetting;
 import views.GameDrawer;
 import views.ImageDrawer;
 
@@ -18,33 +19,38 @@ public class EnemyController extends
         SingleController implements
         Colliable, BombSubscriber, FreezzeSubcriber {
 
+    public static final int SPEED = 3;
     private EnemyState enemyState;
     private int frezzeCount;
 
-    private static int FREZZE_PERIOD = 200;
+    private int FREZZE_PERIOD = 200;
 
     private FreezeBehavior freezeBehavior;
     private ShotBehavior shotBehavior;
     private FlyBehavior flyBehavior;
 
-    public EnemyController(Enemy gameObject,
-                           GameDrawer gameDrawer,
+    public EnemyController(Enemy gameObject, GameDrawer gameDrawer,
                            FreezeBehavior freezeBehavior,
                            ShotBehavior shotBehavior,
                            FlyBehavior flyBehavior) {
         super(gameObject, gameDrawer);
 
-//        this.gameVector.dy = SPEED;
         CollsionPool.instance.add(this);
         NotificationCenter.instance
                 .subsribe(this);
         NotificationCenter.instance
                 .subsribeFrezze(this);
         enemyState = EnemyState.NORMAL;
+
         this.freezeBehavior = freezeBehavior;
         this.shotBehavior = shotBehavior;
         this.flyBehavior = flyBehavior;
-        flyBehavior.doFly(this);
+    }
+
+    public EnemyController(Enemy gameObject, GameDrawer gameDrawer,
+                           FreezeBehavior freezeBehavior,
+                           ShotBehavior shotBehavior) {
+        this(gameObject, gameDrawer, freezeBehavior, shotBehavior, null);
     }
 
     public EnemyState getEnemyState() {
@@ -67,17 +73,17 @@ public class EnemyController extends
                 enemyController = new EnemyController(
                         new Enemy(x, y),
                         new ImageDrawer("resources/enemy_plane_yellow_1.png"),
-                        new FreezeBehavior(FREZZE_PERIOD),
-                        new FollowShotBehavior(),
-                        new DropFlyBehavior());
+                        new FreezeBehavior(200),
+                        null,
+                        new FlyZigZacBehavior());
                 break;
             case WHITE:
                 enemyController = new EnemyController(
                         new Enemy(x, y),
                         new ImageDrawer("resources/enemy_plane_white_1.png"),
-                        new FreezeBehavior(FREZZE_PERIOD * 2),
-                        new DropShotBehavior(),
-                        new ZikzakFlyBehavior());
+                        new FreezeBehavior(300),
+                        new FollowShotBehavior(),
+                        new FlyVerticalBehavior());
                 break;
         }
         return enemyController;
@@ -90,12 +96,16 @@ public class EnemyController extends
 
     @Override
     public void run() {
-        if (gameObject.getX() <= 0 || gameObject.getX() >= 600) {
-            gameVector.dx = -gameVector.dx;
-        }
         switch (this.enemyState) {
             case NORMAL:
                 super.run();
+                if(shotBehavior != null)
+                    shotBehavior.doShot(this);
+                if(flyBehavior != null)
+                    flyBehavior.doFly(this);
+                if(!GameSetting.getInstance().inScreen(gameObject)) {
+                    gameObject.destroy();
+                }
                 break;
             case FREZZED:
                 break;
@@ -103,8 +113,7 @@ public class EnemyController extends
 
         if (freezeBehavior != null)
             freezeBehavior.run(this);
-        if (shotBehavior != null)
-            shotBehavior.doShot(this);
+
     }
 
     @Override

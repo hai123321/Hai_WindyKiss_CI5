@@ -1,6 +1,6 @@
 package controllers;
 
-import controllers.Enemy.EnemyController;
+import controllers.enemies.EnemyController;
 import models.Bullet;
 import models.GameObjectWithHP;
 import views.GameDrawer;

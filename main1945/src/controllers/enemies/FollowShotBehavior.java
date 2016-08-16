@@ -1,8 +1,9 @@
-package controllers.Enemy;
+package controllers.enemies;
 
 import controllers.PlaneController;
 import models.EnemyBullet;
 import models.GameObject;
+import models.GameSetting;
 import views.ImageDrawer;
 
 /**
@@ -11,13 +12,12 @@ import views.ImageDrawer;
 public class FollowShotBehavior implements ShotBehavior {
 
     private final static int BULLET_SPEED = 10;
-    private final static int SHOT_PERIOD = 50;
     private int count;
 
     @Override
     public void doShot(EnemyController enemyController) {
         count++;
-        if(count >= SHOT_PERIOD) {
+        if(GameSetting.getInstance().toMiliseconds(count) > 500.0f) {
             count = 0;
             GameObject gameObject = enemyController.getGameObject();
             EnemyBulletController enemyBulletController =

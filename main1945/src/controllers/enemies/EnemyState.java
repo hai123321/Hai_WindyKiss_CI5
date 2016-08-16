@@ -1,4 +1,4 @@
-package controllers.Enemy;
+package controllers.enemies;
 
 /**
  * Created by qhuydtvt on 8/10/2016.

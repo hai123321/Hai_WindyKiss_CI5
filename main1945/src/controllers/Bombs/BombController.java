@@ -1,4 +1,4 @@
-package controllers.Bombs;
+package controllers.bombs;
 
 import controllers.Colliable;
 import controllers.CollsionPool;
@@ -13,10 +13,8 @@ import views.ImageDrawer;
  * Created by qhuydtvt on 8/10/2016.
  */
 public class BombController extends SingleController implements Colliable {
-
-    private static int LIFE = 100;
-    int count = 0;
-
+    private int cooldown;
+    private int CD = 100;
     public BombController(Bomb gameObject, GameDrawer gameDrawer) {
         super(gameObject, gameDrawer);
         CollsionPool.instance.add(this);
@@ -30,7 +28,7 @@ public class BombController extends SingleController implements Colliable {
 
     @Override
     public void onCollide(Colliable colliable) {
-        if (colliable instanceof PlaneController) {
+        if(colliable instanceof PlaneController) {
 
             NotificationCenter.instance
                     .onBomExpode(gameObject.getX(), gameObject.getY());
@@ -42,9 +40,9 @@ public class BombController extends SingleController implements Colliable {
     @Override
     public void run() {
         super.run();
-        count++;
-        if (count == LIFE){
-            gameObject.destroy();
+        cooldown++;
+        if(cooldown == CD){
+            this.getGameObject().destroy();
         }
     }
 }

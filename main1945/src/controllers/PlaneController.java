@@ -1,5 +1,8 @@
 package controllers;
+import controllers.gamescenes.GameSceneListener;
+import main.GameWindow;
 import models.Bullet;
+import models.GameObjectWithHP;
 import models.Plane;
 import views.GameDrawer;
 import views.ImageDrawer;
@@ -18,10 +21,10 @@ public class PlaneController extends SingleController
     public static final int ATK_SPEED = 3;
     private int count;
 
-
     private ControllerManager bulletManager;
     private GameInput gameInput;
 
+    private GameSceneListener gameSceneListener;
 
     private PlaneController(Plane plane, GameDrawer gameDrawer) {
         super(plane, gameDrawer);
@@ -90,6 +93,16 @@ public class PlaneController extends SingleController
         }
     }
 
+    public void setGameSceneListener(GameSceneListener gameSceneListener) {
+        this.gameSceneListener = gameSceneListener;
+    }
+
+    public void decreaseHP(int amount) {
+        ((GameObjectWithHP) gameObject).decreaseHP(amount);
+        /*TODO: If HP <= 0 => Change gamescene to Higscore or GameOver */
+
+    }
+
     @Override
     public void draw(Graphics g) {
         super.draw(g);
@@ -127,13 +140,17 @@ public class PlaneController extends SingleController
 
         super.run();
         bulletManager.run();
-
     }
 
-    public final static PlaneController instance = new PlaneController(
+    public static final PlaneController instance = new PlaneController(
             new Plane(250, 600),
             new ImageDrawer("resources/plane3.png")
     );
+
+    public void reset(){
+        gameObject.moveTo(250,600);
+        ((GameObjectWithHP)gameObject).setHp(10);
+    }
 
     @Override
     public void onCollide(Colliable colliable) {

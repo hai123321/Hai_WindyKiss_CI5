@@ -1,4 +1,4 @@
-package controllers.Enemy;
+package controllers.enemies;
 
 import controllers.ControllerManager;
 
@@ -9,4 +9,8 @@ public class EnemyBulletControllerManager extends ControllerManager {
 
     public static final EnemyBulletControllerManager instance =
             new EnemyBulletControllerManager();
+
+    public void reset(){
+        this.singleControllerVector.clear();
+    }
 }

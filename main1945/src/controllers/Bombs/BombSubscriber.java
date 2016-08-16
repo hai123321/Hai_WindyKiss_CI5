@@ -1,4 +1,4 @@
-package controllers.Bombs;
+package controllers.bombs;
 
 import models.GameObject;
 

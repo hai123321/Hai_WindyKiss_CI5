@@ -14,6 +14,10 @@ public class GameObjectWithHP extends GameObject {
         this.maxHP = maxHP;
     }
 
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
     public int getHp() {
         return hp;
     }

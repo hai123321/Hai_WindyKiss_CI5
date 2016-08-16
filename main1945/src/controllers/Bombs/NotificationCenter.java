@@ -1,4 +1,4 @@
-package controllers.Bombs;
+package controllers.bombs;
 
 import java.util.Iterator;
 import java.util.Vector;

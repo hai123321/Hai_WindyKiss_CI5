@@ -1,6 +1,4 @@
-package controllers.Enemy;
-
-import controllers.Bombs.FreezzeSubcriber;
+package controllers.enemies;
 
 /**
  * Created by qhuydtvt on 8/10/2016.

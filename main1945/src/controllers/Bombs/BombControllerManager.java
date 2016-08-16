@@ -1,4 +1,4 @@
-package controllers.Bombs;
+package controllers.bombs;
 
 import controllers.ControllerManager;
 
@@ -36,5 +36,9 @@ public class BombControllerManager extends ControllerManager {
             this.add(bombController);
         }
         super.run();
+    }
+
+    public void reset(){
+        this.singleControllerVector.clear();
     }
 }

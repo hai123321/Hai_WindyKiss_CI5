@@ -1,4 +1,4 @@
-package controllers.Bombs;
+package controllers.bombs;
 
 import controllers.Colliable;
 import controllers.CollsionPool;
@@ -13,9 +13,8 @@ import views.ImageDrawer;
  */
 public class LockController extends SingleController implements Colliable {
 
-    private static int LIFE = 100;
-    int count = 0;
-
+    private int cooldown;
+    private int CD = 200;
     public LockController(Lock gameObject, GameDrawer gameDrawer) {
         super(gameObject, gameDrawer);
         CollsionPool.instance.add(this);
@@ -39,9 +38,9 @@ public class LockController extends SingleController implements Colliable {
     @Override
     public void run() {
         super.run();
-        count++;
-        if (count == LIFE){
-            gameObject.destroy();
+        cooldown++;
+        if(cooldown == CD){
+            this.getGameObject().destroy();
         }
     }
 }
