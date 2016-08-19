@@ -34,11 +34,9 @@ public class BombControllerManager extends ControllerManager {
             BombController bombController = BombController
                     .create(x, y);
             this.add(bombController);
+            ProtectedController protectedController = ProtectedController.create(x, 10);
+            this.add(protectedController);
         }
         super.run();
-    }
-
-    public void reset(){
-        this.singleControllerVector.clear();
     }
 }

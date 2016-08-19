@@ -7,6 +7,7 @@ public class GameVector {
     public int dx;
     public int dy;
 
+
     public GameVector() {
         this(0, 0);
     }

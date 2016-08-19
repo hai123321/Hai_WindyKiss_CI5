@@ -13,8 +13,9 @@ import views.ImageDrawer;
  */
 public class LockController extends SingleController implements Colliable {
 
-    private int cooldown;
-    private int CD = 200;
+    private int COOLDOWN = 100;
+    private int countcd;
+
     public LockController(Lock gameObject, GameDrawer gameDrawer) {
         super(gameObject, gameDrawer);
         CollsionPool.instance.add(this);
@@ -38,8 +39,8 @@ public class LockController extends SingleController implements Colliable {
     @Override
     public void run() {
         super.run();
-        cooldown++;
-        if(cooldown == CD){
+        countcd++;
+        if (countcd == COOLDOWN) {
             this.getGameObject().destroy();
         }
     }

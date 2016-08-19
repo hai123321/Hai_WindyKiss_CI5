@@ -1,9 +1,15 @@
 package controllers;
+import controllers.bombs.NotificationCenter;
+import controllers.bombs.ProtectSubcriber;
+import controllers.enemies.EnemyBulletController;
 import controllers.gamescenes.GameSceneListener;
-import main.GameWindow;
+import controllers.gamescenes.GameOverScene;
+import models.Ally;
 import models.Bullet;
 import models.GameObjectWithHP;
 import models.Plane;
+import utils.Utils;
+import views.AnimationDrawer;
 import views.GameDrawer;
 import views.ImageDrawer;
 
@@ -15,7 +21,7 @@ import java.awt.event.KeyListener;
  * Created by qhuydtvt on 7/30/2016.
  */
 public class PlaneController extends SingleController
-        implements KeyListener, Colliable {
+        implements KeyListener, Colliable, ProtectSubcriber {
 
     public static final int SPEED = 10;
     public static final int ATK_SPEED = 3;
@@ -23,6 +29,7 @@ public class PlaneController extends SingleController
 
     private ControllerManager bulletManager;
     private GameInput gameInput;
+    private boolean cheat = false;
 
     private GameSceneListener gameSceneListener;
 
@@ -31,6 +38,8 @@ public class PlaneController extends SingleController
         this.bulletManager = new ControllerManager();
         this.gameInput = new GameInput();
         CollsionPool.instance.add(this);
+        NotificationCenter.instance
+                .subsribeProtected(this);
     }
 
     @Override
@@ -90,6 +99,13 @@ public class PlaneController extends SingleController
 //                );
 //                bulletManager.add(bulletController);
                 break;
+            case KeyEvent.VK_S: /*S stands for Setting :)*/
+                gameSceneListener.changeGameScene(new GameOverScene(), false);
+                break;
+            case KeyEvent.VK_C:
+                cheat = true;
+                break;
+
         }
     }
 
@@ -98,9 +114,13 @@ public class PlaneController extends SingleController
     }
 
     public void decreaseHP(int amount) {
-        ((GameObjectWithHP) gameObject).decreaseHP(amount);
+        if(!cheat) {
+            ((GameObjectWithHP)gameObject).decreaseHP(amount);
         /*TODO: If HP <= 0 => Change gamescene to Higscore or GameOver */
-
+            if (((GameObjectWithHP) gameObject).getHp() <= 0) {
+                gameSceneListener.changeGameScene(new GameOverScene(), false);
+            }
+        }
     }
 
     @Override
@@ -142,18 +162,31 @@ public class PlaneController extends SingleController
         bulletManager.run();
     }
 
-    public static final PlaneController instance = new PlaneController(
+    public final static PlaneController instance = new PlaneController(
             new Plane(250, 600),
             new ImageDrawer("resources/plane3.png")
     );
 
-    public void reset(){
-        gameObject.moveTo(250,600);
-        ((GameObjectWithHP)gameObject).setHp(10);
-    }
 
     @Override
     public void onCollide(Colliable colliable) {
+        if (colliable instanceof EnemyBulletController) {
+            colliable.getGameObject().destroy();
+        }
+    }
 
+
+    @Override
+    public void onProtected(int x, int y) {
+        AllyController allyController = new AllyController(
+                new Ally(gameObject.getMiddleX() - 100, gameObject.getMiddleY()),
+//                new Ally(400, 600),
+                new AnimationDrawer(
+                        Utils.loadFromSprite("resources/ally.png",true,40,40,0),
+                        false
+                )
+//                new ImageDrawer("resources/setting.png")
+        );
+        AllyControllerManager.instance.add(allyController);
     }
 }

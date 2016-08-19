@@ -24,4 +24,9 @@ public class ImageDrawer implements GameDrawer {
         g.drawImage(img, gameObject.getX(), gameObject.getY(),
                 gameObject.getWidth(), gameObject.getHeight(), null);
     }
+
+    @Override
+    public void run() {
+
+    }
 }

@@ -50,7 +50,7 @@ public class MenuGameScence implements GameScene, KeyListener {
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_ENTER) {
             if(gameSceneListener != null)
-                gameSceneListener.changeGameScene(new PlayGameScene());
+                gameSceneListener.changeGameScene(new PlayGameScene(), true);
             else {
                 System.out.println(String.format(
                         "%s : gameSceneListener is not set",

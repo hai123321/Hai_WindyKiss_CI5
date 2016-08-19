@@ -9,7 +9,7 @@ import java.util.Vector;
  */
 public class ControllerManager implements BaseController {
 
-    protected Vector<SingleController> singleControllerVector;
+    private Vector<SingleController> singleControllerVector;
 
     public ControllerManager() {
         singleControllerVector = new Vector<SingleController>();

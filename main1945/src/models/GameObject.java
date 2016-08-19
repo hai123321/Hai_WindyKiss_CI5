@@ -37,6 +37,10 @@ public abstract class GameObject {
         return this.x + this.width / 2;
     }
 
+    public int getMiddleY() {
+        return this.y + this.height / 2;
+    }
+
     public int getBottom() {
         return  this.y + this.height;
     }

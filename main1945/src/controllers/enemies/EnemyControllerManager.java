@@ -46,9 +46,5 @@ public class EnemyControllerManager extends ControllerManager {
         }
     }
 
-    public static final EnemyControllerManager instance = new EnemyControllerManager();
-
-    public void reset(){
-        this.singleControllerVector.clear();
-    }
+    public final static EnemyControllerManager instance = new EnemyControllerManager();
 }

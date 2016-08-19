@@ -13,8 +13,10 @@ import views.ImageDrawer;
  * Created by qhuydtvt on 8/10/2016.
  */
 public class BombController extends SingleController implements Colliable {
-    private int cooldown;
-    private int CD = 100;
+
+    private int COOLDOWN = 100;
+    private int countcd;
+
     public BombController(Bomb gameObject, GameDrawer gameDrawer) {
         super(gameObject, gameDrawer);
         CollsionPool.instance.add(this);
@@ -28,10 +30,10 @@ public class BombController extends SingleController implements Colliable {
 
     @Override
     public void onCollide(Colliable colliable) {
-        if(colliable instanceof PlaneController) {
+        if (colliable instanceof PlaneController) {
 
             NotificationCenter.instance
-                    .onBomExpode(gameObject.getX(), gameObject.getY());
+                    .onBomExplode(gameObject.getX(), gameObject.getY());
             Utils.playSound("resources/explosion.wav", false);
             gameObject.destroy();
         }
@@ -40,8 +42,8 @@ public class BombController extends SingleController implements Colliable {
     @Override
     public void run() {
         super.run();
-        cooldown++;
-        if(cooldown == CD){
+        countcd++;
+        if (countcd == COOLDOWN) {
             this.getGameObject().destroy();
         }
     }

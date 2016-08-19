@@ -11,10 +11,12 @@ import java.util.Vector;
 public class NotificationCenter {
     private Vector<BombSubscriber> subscribers;
     private Vector<FreezzeSubcriber> freezzeSubcribers;
+    private Vector<ProtectSubcriber> protectSubcribers;
 
     public NotificationCenter() {
         subscribers = new Vector<BombSubscriber>();
         freezzeSubcribers = new Vector<FreezzeSubcriber>();
+        protectSubcribers = new Vector<ProtectSubcriber>();
     }
 
     public void subsribe(BombSubscriber bombSubscriber) {
@@ -25,7 +27,15 @@ public class NotificationCenter {
         freezzeSubcribers.add(bombSubscriber);
     }
 
-    public void onBomExpode(int x, int y) {
+
+    public void subsribeProtected(ProtectSubcriber protectSubcriber) {
+        protectSubcribers.add(protectSubcriber);
+    }
+
+
+
+
+    public void onBomExplode(int x, int y) {
         Iterator<BombSubscriber> bombSubscriberIterator = subscribers.iterator();
         while(bombSubscriberIterator.hasNext()) {
             BombSubscriber bombSubscriber = bombSubscriberIterator.next();
@@ -33,6 +43,18 @@ public class NotificationCenter {
                 bombSubscriberIterator.remove();
             } else {
                 bombSubscriber.onBombExplode(x, y);
+            }
+        }
+    }
+
+    public void onProtected(int x, int y) {
+        Iterator<ProtectSubcriber> protectSubcriberIterator = protectSubcribers.iterator();
+        while(protectSubcriberIterator.hasNext()) {
+            ProtectSubcriber protectSubcriber = protectSubcriberIterator.next();
+            if(!protectSubcriber.getGameObject().isAlive()) {
+                protectSubcriberIterator.remove();
+            } else {
+                protectSubcriber.onProtected(x, y);
             }
         }
     }

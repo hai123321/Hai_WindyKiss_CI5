@@ -9,4 +9,5 @@ import java.awt.*;
  */
 public interface GameDrawer {
     void draw(Graphics g, GameObject gameObject);
+    void run();
 }

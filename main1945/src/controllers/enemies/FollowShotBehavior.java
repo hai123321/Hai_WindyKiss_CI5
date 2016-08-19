@@ -11,7 +11,7 @@ import views.ImageDrawer;
  */
 public class FollowShotBehavior implements ShotBehavior {
 
-    private final static int BULLET_SPEED = 10;
+    private final static int BULLET_SPEED = 3;
     private int count;
 
     @Override

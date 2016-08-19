@@ -1,5 +1,6 @@
 package controllers.enemies;
 
+import controllers.ExplosionController;
 import controllers.bombs.FreezzeSubcriber;
 import controllers.bombs.NotificationCenter;
 import controllers.bombs.BombSubscriber;
@@ -7,9 +8,11 @@ import controllers.Colliable;
 import controllers.CollsionPool;
 import controllers.SingleController;
 import models.Enemy;
+import models.Explosion;
 import models.GameSetting;
+import utils.Utils;
+import views.AnimationDrawer;
 import views.GameDrawer;
-import views.ImageDrawer;
 
 /**
  * Created by qhuydtvt on 7/31/2016.
@@ -72,7 +75,13 @@ public class EnemyController extends
             case YELLOW:
                 enemyController = new EnemyController(
                         new Enemy(x, y),
-                        new ImageDrawer("resources/enemy_plane_yellow_1.png"),
+                        new AnimationDrawer(
+                                Utils.loadFromSprite("resources/enemy_plane_yellow.png",
+                                        true,
+                                        32,
+                                        32,
+                                        1)
+                        ),
                         new FreezeBehavior(200),
                         null,
                         new FlyZigZacBehavior());
@@ -80,7 +89,12 @@ public class EnemyController extends
             case WHITE:
                 enemyController = new EnemyController(
                         new Enemy(x, y),
-                        new ImageDrawer("resources/enemy_plane_white_1.png"),
+                        new AnimationDrawer(
+                                Utils.loadImages(
+                                        "resources/enemy_plane_white_1.png",
+                                        "resources/enemy_plane_white_2.png",
+                                        "resources/enemy_plane_white_3.png")
+                        ),
                         new FreezeBehavior(300),
                         new FollowShotBehavior(),
                         new FlyVerticalBehavior());
@@ -91,7 +105,19 @@ public class EnemyController extends
 
     @Override
     public void onBombExplode(int x, int y) {
+        this.destroy();
+    }
+
+    public void destroy() {
         gameObject.destroy();
+        ExplosionController explosionController = new ExplosionController(
+                new Explosion(gameObject.getX(), gameObject.getY()),
+                new AnimationDrawer(
+                        Utils.loadFromSprite("resources/explosion.png",true,32,32,1),
+                        true
+                )
+        );
+        EnemyControllerManager.instance.add(explosionController);
     }
 
     @Override

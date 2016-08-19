@@ -12,7 +12,7 @@ import java.awt.*;
 public class SingleController implements BaseController {
 
     protected GameObject gameObject;
-    private GameDrawer gameDrawer;
+    protected GameDrawer gameDrawer;
     protected GameVector gameVector;
 
     public SingleController(GameObject gameObject, GameDrawer gameDrawer) {
@@ -37,5 +37,6 @@ public class SingleController implements BaseController {
     @Override
     public void run() {
         gameObject.move(this.gameVector);
+        gameDrawer.run();
     }
 }

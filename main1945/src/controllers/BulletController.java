@@ -1,8 +1,12 @@
 package controllers;
 
 import controllers.enemies.EnemyController;
+import controllers.enemies.EnemyControllerManager;
 import models.Bullet;
+import models.Explosion;
 import models.GameObjectWithHP;
+import utils.Utils;
+import views.AnimationDrawer;
 import views.GameDrawer;
 
 /**
@@ -30,8 +34,11 @@ public class BulletController extends SingleController implements Colliable {
     public void onCollide(Colliable colliable) {
         if (colliable instanceof EnemyController) {
             Bullet bullet = (Bullet)gameObject;
-            ((GameObjectWithHP)colliable.getGameObject()).decreaseHP(bullet.getDamage());
+            GameObjectWithHP target = (GameObjectWithHP) colliable.getGameObject();
+            //((GameObjectWithHP) colliable.getGameObject()).decreaseHP(bullet.getDamage());
             this.getGameObject().destroy();
+
+            ((EnemyController) colliable).destroy();
         }
     }
 }
